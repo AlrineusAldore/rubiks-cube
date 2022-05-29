@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Numerics;
 
 namespace RubiksCube
 {
@@ -43,6 +44,11 @@ namespace RubiksCube
             }
 
             return false;
+        }
+
+        public void rotate()
+        {
+            Vector v;
         }
     }
 }
