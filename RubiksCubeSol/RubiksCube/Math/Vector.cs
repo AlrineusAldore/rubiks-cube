@@ -23,11 +23,22 @@ namespace RubiksCube.Math
             this.y = y;
             this.z = z;
         }
+        public Vector(int[] coords)
+        {
+            x = coords[0];
+            y = coords[1];
+            z = coords[2];
+        }
 
         //Returns dot product of vectors
-        public int DotProduct(Vector other)
+        public int GetDotProduct(Vector other)
         {
             return x * other.x + y * other.y + z * other.z;
+        }
+
+        public override string ToString()
+        {
+            return "[" + x +", " + y + ", " + z + "]";
         }
     }
 }
