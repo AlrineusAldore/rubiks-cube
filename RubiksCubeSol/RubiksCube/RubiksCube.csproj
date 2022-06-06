@@ -62,14 +62,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CubeModel\Colors.cs" />
-    <Compile Include="CubeModel2\Cube.cs" />
+    <Compile Include="CubeModel\Constants.cs" />
     <Compile Include="CubeModel\Cubie.cs" />
-    <Compile Include="CubeModel2\Face.cs" />
     <Compile Include="MainActivity.cs" />
+    <Compile Include="Math\Matrix.cs" />
+    <Compile Include="Math\Vector.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="CubeModel\RubiksCube.cs" />
-    <Compile Include="CubeModel2\Square.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />
