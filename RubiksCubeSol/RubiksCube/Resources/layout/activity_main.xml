@@ -5,14 +5,49 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/holo_orange_dark">
+    android:background="@android:color/black">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/rubiks_cube"/>
 
     <TextView
-        android:id="@+id/tv"
+        android:id="@+id/tvHello"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:layout_gravity="center"
         android:textColor="@android:color/white"
-        android:text="hi"/>
+        android:text="How ya doin' Guesty?"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:id="@+id/btnPlay"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Play Rubik's Cube"
+        android:layout_gravity="center"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/btnRules"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:text="Solving Rules"/>
+
+    <Button
+        android:id="@+id/btnSaves"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:text="Saved States"
+        android:visibility="invisible"/>
+
+
 </LinearLayout>
