@@ -33,12 +33,12 @@
         android:textSize="20sp"/>
 
     <Button
-        android:id="@+id/btnRules"
+        android:id="@+id/btnNotations"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:textSize="20sp"
-        android:text="Solving Rules"/>
+        android:text="Notations"/>
 
     <Button
         android:id="@+id/btnSaves"
