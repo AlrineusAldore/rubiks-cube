@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using RubiksCube.Math;
 
 namespace RubiksCube
 {
@@ -192,6 +193,11 @@ namespace RubiksCube
             }*/
 
             return pretty;
+        }
+
+        public void RotateSlice(Vector face, Matrix matrix)
+        {
+
         }
     }
 }

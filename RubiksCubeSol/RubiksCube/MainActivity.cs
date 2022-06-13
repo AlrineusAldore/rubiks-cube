@@ -19,6 +19,7 @@ namespace RubiksCube
         Button btnPlay, btnNotations, btnSaves;
         EditText etUsername, etEmail, etPass, etConfirmPass;
         Button btnLoginRegister;
+        Button btnEndNots;
         Dialog d;
         Tuple<string, string> user;
         bool isLogin;
@@ -58,12 +59,17 @@ namespace RubiksCube
         {
             if (v == btnPlay)
             {
-                HandleCube();
+                Intent intent = new Intent(this, typeof(RubiksCubeActivity));
+                StartActivity(intent);
             }
             else if (v == btnNotations)
             {
                 //Create dialog
                 CreateNotationsDialog();
+            }
+            else if (v == btnEndNots)
+            {
+                d.Cancel();
             }
             else if (v == btnLoginRegister)
             {
@@ -213,7 +219,10 @@ namespace RubiksCube
             d.SetContentView(Resource.Layout.notations_layout);
             d.SetCancelable(true);
             d.SetTitle("Notations");
+
             tvExplanation = d.FindViewById<TextView>(Resource.Id.tvExplanation);
+            btnEndNots = d.FindViewById<Button>(Resource.Id.btnEndNots);
+            btnEndNots.SetOnClickListener(this);
 
             tvExplanation.Text = "A single letter by itself refers to a clockwise face rotation in 90 degrees (quarter turn).\n";
             tvExplanation.Text += "A letter followed by an apostrophe means to turn that face counterclockwise 90 degrees.\n";

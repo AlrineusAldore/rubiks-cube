@@ -14,6 +14,15 @@ namespace RubiksCube
     [Activity(Label = "RubiksCubeActivity")]
     public class RubiksCubeActivity : Activity
     {
+        FrameLayout frameLayout;
+        Button btnSaveState;
+        Button btnEditCube;
+        Button btnBackSave;
+
+        Button[] arrows;
+
+        Button[] colors;
+
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
