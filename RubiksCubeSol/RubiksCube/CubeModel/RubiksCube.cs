@@ -151,7 +151,7 @@ namespace RubiksCube
         
         public string ToPrettyString()
         {
-            /* end result:
+            /* TODO end result:
                 yyy
                 yyy
                 yyy
@@ -165,6 +165,15 @@ namespace RubiksCube
             string pretty = "";
             string original = ToString();
 
+            /* currently its:
+                
+            yyyyyyyyy
+            ooooooooo
+            bbbbbbbbb
+            rrrrrrrrr
+            ggggggggg
+            wwwwwwwww
+            */
             for (int i = 0; i < 6*9; i+=9)
             {
                 pretty += original.Substring(i, 9) + "\n";

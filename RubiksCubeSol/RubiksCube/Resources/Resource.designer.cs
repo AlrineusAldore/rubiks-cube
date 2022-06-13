@@ -4137,37 +4137,43 @@ namespace RubiksCube
 			public const int tvHello = 2131230962;
 			
 			// aapt resource value: 0x7F0800F3
-			public const int @unchecked = 2131230963;
+			public const int tvStateCubeStr = 2131230963;
 			
 			// aapt resource value: 0x7F0800F4
-			public const int uniform = 2131230964;
+			public const int tvStateId = 2131230964;
 			
 			// aapt resource value: 0x7F0800F5
-			public const int unlabeled = 2131230965;
+			public const int @unchecked = 2131230965;
 			
 			// aapt resource value: 0x7F0800F6
-			public const int up = 2131230966;
+			public const int uniform = 2131230966;
 			
 			// aapt resource value: 0x7F0800F7
-			public const int useLogo = 2131230967;
+			public const int unlabeled = 2131230967;
 			
 			// aapt resource value: 0x7F0800F8
-			public const int view_offset_helper = 2131230968;
+			public const int up = 2131230968;
 			
 			// aapt resource value: 0x7F0800F9
-			public const int view_tree_saved_state_registry_owner = 2131230969;
+			public const int useLogo = 2131230969;
 			
 			// aapt resource value: 0x7F0800FA
-			public const int visible = 2131230970;
+			public const int view_offset_helper = 2131230970;
 			
 			// aapt resource value: 0x7F0800FB
-			public const int visible_removing_fragment_view_tag = 2131230971;
+			public const int view_tree_saved_state_registry_owner = 2131230971;
 			
 			// aapt resource value: 0x7F0800FC
-			public const int withText = 2131230972;
+			public const int visible = 2131230972;
 			
 			// aapt resource value: 0x7F0800FD
-			public const int wrap_content = 2131230973;
+			public const int visible_removing_fragment_view_tag = 2131230973;
+			
+			// aapt resource value: 0x7F0800FE
+			public const int withText = 2131230974;
+			
+			// aapt resource value: 0x7F0800FF
+			public const int wrap_content = 2131230975;
 			
 			static Id()
 			{
@@ -4458,16 +4464,16 @@ namespace RubiksCube
 			public const int rubiks_cube_layout = 2131427384;
 			
 			// aapt resource value: 0x7F0B0039
-			public const int save = 2131427385;
+			public const int select_dialog_item_material = 2131427385;
 			
 			// aapt resource value: 0x7F0B003A
-			public const int select_dialog_item_material = 2131427386;
+			public const int select_dialog_multichoice_material = 2131427386;
 			
 			// aapt resource value: 0x7F0B003B
-			public const int select_dialog_multichoice_material = 2131427387;
+			public const int select_dialog_singlechoice_material = 2131427387;
 			
 			// aapt resource value: 0x7F0B003C
-			public const int select_dialog_singlechoice_material = 2131427388;
+			public const int state_row = 2131427388;
 			
 			// aapt resource value: 0x7F0B003D
 			public const int support_simple_spinner_dropdown_item = 2131427389;
