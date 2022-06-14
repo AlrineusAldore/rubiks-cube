@@ -78,6 +78,24 @@ namespace RubiksCube
             }
         }
 
+        public string GetFront()
+        {
+            string front = "";
+            for (int i = 0; i < 9; i++)
+            {
+                //Get all f colors of all front cubies (z=2)
+                // x = 0,1,2,0,1,2,0,1,2
+                // y = 2,2,2,1,1,1,0,0,0
+                // z = 2,2,2,2,2,2,2,2,2
+                front += cubies[i % 3, 2 - (i/3), 2].colors[2].ToString()[0];
+                //   f->f->f
+                // ->f->f->f
+                // ->f->f->f
+            }
+
+            return front;
+        }
+
         public RubiksCube(string cubeStr) : this()
         {
             for (int i = 0; i < 9; i++)
@@ -293,7 +311,7 @@ namespace RubiksCube
             return pretty;
         }
 
-        private Color CharToColor(char c)
+        public Color CharToColor(char c)
         {
             Color col;
 
@@ -329,7 +347,11 @@ namespace RubiksCube
         {
             List<Cubie> pieces = new List<Cubie>();
             foreach (Cubie c in cubies)
+            {
+                if (c == null)
+                    break;
                 pieces.Add(c);
+            }
             return pieces.ToArray();
         }
 
@@ -341,6 +363,8 @@ namespace RubiksCube
             //instead of triple loop
             foreach (Cubie c in cubies)
             {
+                if (c == null)
+                    break;
                 if (face.GetDotProduct(c.position) > 0) //only true for cubies in the same face (simple mafs)
                     pieces.Add(c);
             }
@@ -364,6 +388,8 @@ namespace RubiksCube
             //instead of triple loop
             foreach (Cubie c in cubies)
             {
+                if (c == null)
+                    break;
                 if (c.position[i] == 0) //If both cube and slice remain on the same plane
                     pieces.Add(c);
             }

@@ -22,18 +22,18 @@ namespace RubiksCube
         Button btnBackSave;
 
         FrameLayout main;
-        ImageView[,] arrows;
-        ImageView[,] faces;
+        ImageView[] arrows;
+        ImageView[] faces;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
             SetContentView(Resource.Layout.rubiks_cube_layout);
             // Create your application here
-            
+
             //Get username from intent
             username = Intent.GetStringExtra("username") ?? "";
-            
+
             //Continue cube from where you last left off by using sp
             sp = GetSharedPreferences("details", FileCreationMode.Private);
             string cubeStr = sp.GetString("cubeStr", Constants.NEW_CUBE_STR);
@@ -52,53 +52,43 @@ namespace RubiksCube
 
             main = FindViewById<FrameLayout>(Resource.Id.main);
             CreateCubeBoard();
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 12; i++)
             {
-                for (int j = 0; j < 3; j++)
-                {
-                    arrows[i, j].SetOnClickListener(this);
-                }
+                arrows[i].SetOnClickListener(this);
             }
         }
 
         private void CreateCubeBoard()
         {
-            arrows = new ImageView[4, 3];
-            faces = new ImageView[3, 3];
+            arrows = new ImageView[12];
+            faces = new ImageView[9];
 
-            arrows[0,0] = FindViewById<ImageView>(Resource.Id.up_left);
-            arrows[0,1] = FindViewById<ImageView>(Resource.Id.up_mid);
-            arrows[0,2] = FindViewById<ImageView>(Resource.Id.up_right);
-            arrows[1,0] = FindViewById<ImageView>(Resource.Id.right_up);
-            arrows[1,1] = FindViewById<ImageView>(Resource.Id.right_mid);
-            arrows[1,2] = FindViewById<ImageView>(Resource.Id.right_down);
-            arrows[2,0] = FindViewById<ImageView>(Resource.Id.down_right);
-            arrows[2,1] = FindViewById<ImageView>(Resource.Id.down_mid);
-            arrows[2,2] = FindViewById<ImageView>(Resource.Id.down_left);
-            arrows[3,0] = FindViewById<ImageView>(Resource.Id.left_down);
-            arrows[3,1] = FindViewById<ImageView>(Resource.Id.left_mid);
-            arrows[3,2] = FindViewById<ImageView>(Resource.Id.left_up);
+            arrows[0] = FindViewById<ImageView>(Resource.Id.up_left);
+            arrows[1] = FindViewById<ImageView>(Resource.Id.up_mid);
+            arrows[2] = FindViewById<ImageView>(Resource.Id.up_right);
+            arrows[3] = FindViewById<ImageView>(Resource.Id.right_up);
+            arrows[4] = FindViewById<ImageView>(Resource.Id.right_mid);
+            arrows[5] = FindViewById<ImageView>(Resource.Id.right_down);
+            arrows[6] = FindViewById<ImageView>(Resource.Id.down_right);
+            arrows[7] = FindViewById<ImageView>(Resource.Id.down_mid);
+            arrows[8] = FindViewById<ImageView>(Resource.Id.down_left);
+            arrows[9] = FindViewById<ImageView>(Resource.Id.left_down);
+            arrows[10] = FindViewById<ImageView>(Resource.Id.left_mid);
+            arrows[11] = FindViewById<ImageView>(Resource.Id.left_up);
 
-            faces[0,0] = FindViewById<ImageView>(Resource.Id.face1);
-            faces[0,1] = FindViewById<ImageView>(Resource.Id.face2);
-            faces[0,2] = FindViewById<ImageView>(Resource.Id.face3);
-            faces[1,0] = FindViewById<ImageView>(Resource.Id.face4);
-            faces[1,1] = FindViewById<ImageView>(Resource.Id.face5);
-            faces[1,2] = FindViewById<ImageView>(Resource.Id.face6);
-            faces[2,0] = FindViewById<ImageView>(Resource.Id.face7);
-            faces[2,1] = FindViewById<ImageView>(Resource.Id.face8);
-            faces[2,2] = FindViewById<ImageView>(Resource.Id.face9);
+            faces[0] = FindViewById<ImageView>(Resource.Id.face1);
+            faces[1] = FindViewById<ImageView>(Resource.Id.face2);
+            faces[2] = FindViewById<ImageView>(Resource.Id.face3);
+            faces[3] = FindViewById<ImageView>(Resource.Id.face4);
+            faces[4] = FindViewById<ImageView>(Resource.Id.face5);
+            faces[5] = FindViewById<ImageView>(Resource.Id.face6);
+            faces[6] = FindViewById<ImageView>(Resource.Id.face7);
+            faces[7] = FindViewById<ImageView>(Resource.Id.face8);
+            faces[8] = FindViewById<ImageView>(Resource.Id.face9);
 
 
-            int n = 1;
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    faces[i, j].SetOnClickListener(this);
-                    faces[i, j].SetBackgroundColor(Android.Graphics.Color.Green);
-                }
-            }
+            for (int i = 0; i < 9; i++)
+                faces[i].SetOnClickListener(this);
         }
 
         public void OnClick(View v)
@@ -119,19 +109,99 @@ namespace RubiksCube
             }
             else
             {
-                for (int i = 0; i < 4; i++)
+                for (int i = 0; i < 12; i++)
                 {
-                    for (int j = 0; j < 3; j++)
+                    if (v == arrows[i])
                     {
-                        if (v == arrows[i, j])
-                            RotateBy(i, j);
+                        Rotate(i);
+                        break;
                     }
                 }
             }
         }
 
-        private void RotateBy(int i, int j)
+        private void Rotate(int x)
         {
+            switch (x)
+            {
+                case 0:
+                    rubiksCube.Li();
+                    break;
+                case 1:
+                    rubiksCube.Mi();
+                    break;
+                case 2:
+                    rubiksCube.R();
+                    break;
+                case 3:
+                    rubiksCube.Ui();
+                    break;
+                case 4:
+                    rubiksCube.E();
+                    break;
+                case 5:
+                    rubiksCube.D();
+                    break;
+                case 6:
+                    rubiksCube.Ri();
+                    break;
+                case 7:
+                    rubiksCube.M();
+                    break;
+                case 8:
+                    rubiksCube.L();
+                    break;
+                case 9:
+                    rubiksCube.Di();
+                    break;
+                case 10:
+                    rubiksCube.Ei();
+                    break;
+                case 11:
+                    rubiksCube.U();
+                    break;
+            }
+            Update();
+        }
+
+        private void Update()
+        {
+            string front = rubiksCube.GetFront();
+            for (int i = 0; i < 9; i++)
+            {
+                //Char to cube color to xamarin color to set the background
+                faces[i].SetBackgroundColor(CubeColor2XmlColor(rubiksCube.CharToColor(front[i])));
+            }
+
+        }
+
+        private Android.Graphics.Color CubeColor2XmlColor(Color color)
+        {
+            Android.Graphics.Color graphicsColor = Android.Graphics.Color.Gray;
+
+            switch (color)
+            {
+                case Color.yellow:
+                    graphicsColor = Android.Graphics.Color.Yellow;
+                    break;
+                case Color.orange:
+                    graphicsColor = Android.Graphics.Color.Orange;
+                    break;
+                case Color.blue:
+                    graphicsColor = Android.Graphics.Color.Blue;
+                    break;
+                case Color.red:
+                    graphicsColor = Android.Graphics.Color.Red;
+                    break;
+                case Color.green:
+                    graphicsColor = Android.Graphics.Color.Green;
+                    break;
+                case Color.white:
+                    graphicsColor = Android.Graphics.Color.White;
+                    break;
+            }
+
+            return graphicsColor;
 
         }
 

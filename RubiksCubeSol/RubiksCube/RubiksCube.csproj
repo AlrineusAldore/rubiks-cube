@@ -61,12 +61,12 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CubeModel2\Cube.cs" />
-    <Compile Include="CubeModel2\Face.cs" />
-    <Compile Include="CubeModel2\Square.cs" />
     <Compile Include="CubeModel\Colors.cs" />
     <Compile Include="CubeModel\Constants.cs" />
     <Compile Include="CubeModel\Cubie.cs" />
+    <Compile Include="CubieTypes\Center.cs" />
+    <Compile Include="CubieTypes\Corner.cs" />
+    <Compile Include="CubieTypes\Edge.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Math\Matrix.cs" />
     <Compile Include="Math\Vector.cs" />
