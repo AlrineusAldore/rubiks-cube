@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace RubiksCube.Math
+namespace RubiksCube
 {
     public class Vector
     {
@@ -65,6 +65,19 @@ namespace RubiksCube.Math
         public static Vector operator -(Vector v1, Vector v2)
         {
             return new Vector(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+        }
+
+        //Overloading [index] operator
+        public int this[int key]
+        {
+            get => GetValue(key);
+            //set => SetValue(key, value);
+        }
+
+        private int GetValue(int n)
+        {
+            int[] arr = new int[] { x, y, z };
+            return arr[n];
         }
 
         public override string ToString()

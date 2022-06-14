@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using RubiksCube.Math;
 using System.Diagnostics;
 
 namespace RubiksCube
@@ -47,9 +46,9 @@ namespace RubiksCube
             return false;
         }
 
-        public bool IsFace()
+        public bool IsCenter()
         {
-            return this is Face;
+            return this is Center;
         }
         public bool IsEdge()
         {

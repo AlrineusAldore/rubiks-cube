@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using RubiksCube.Math;
 
 namespace RubiksCube
 {
@@ -71,7 +70,7 @@ namespace RubiksCube
                                 cubies[x, y, z] = new Edge(x - 1, y - 1, z - 1, cx, cy, cz);
                                 break;
                             case 2:
-                                cubies[x, y, z] = new Face(x - 1, y - 1, z - 1, cx, cy, cz);
+                                cubies[x, y, z] = new Center(x - 1, y - 1, z - 1, cx, cy, cz);
                                 break;
                         }
                     }
@@ -325,20 +324,103 @@ namespace RubiksCube
 
             return col;
         }
-
-
-        public void RotateSlice(Vector face, Matrix matrix)
+        //Flatten 3d array of cubies to 1d array
+        private Cubie[] To1D()
         {
-
+            List<Cubie> pieces = new List<Cubie>();
+            foreach (Cubie c in cubies)
+                pieces.Add(c);
+            return pieces.ToArray();
         }
 
-        //Get the set of Cubies that need to rotate and rotate them
+        public Cubie[] GetFace(Vector face)
+        {
+            System.Diagnostics.Debug.Assert(face.Count(0) == 2); //make sure the vector represents a face
+            List<Cubie> pieces = new List<Cubie>();
+
+            //instead of triple loop
+            foreach (Cubie c in cubies)
+            {
+                if (face.GetDotProduct(c.position) > 0) //only true for cubies in the same face (simple mafs)
+                    pieces.Add(c);
+            }
+
+            return pieces.ToArray();
+        }
+
+        public Cubie[] GetSlice(Vector plane)
+        {
+            System.Diagnostics.Debug.Assert(plane.Count(0) == 1); //make sure the vector represents a plane
+            List<Cubie> pieces = new List<Cubie>();
+            
+            //Get index of the coord that is equal to 0
+            int i = 0;
+            for (i = 0; i < 3; i++)
+            {
+                if (plane[i] == 0)
+                    break;
+            }
+
+            //instead of triple loop
+            foreach (Cubie c in cubies)
+            {
+                if (c.position[i] == 0) //If both cube and slice remain on the same plane
+                    pieces.Add(c);
+            }
+
+            return pieces.ToArray();
+        }
+
+        //direction can be either an axis or a plane
+        private void RotateSlice(Vector direction, Matrix matrix)
+        {
+            Cubie[] pieces;
+            
+            if (direction.Count(0) == 2) //its a face
+                pieces = GetFace(direction);
+            else //There is only 1 zero and its a plane
+                pieces = GetSlice(direction);
+
+            RotateCubies(pieces, matrix);
+        }
+
+        //Get the set of Cubies that need to rotate, and then rotate them
         private void RotateCubies(Cubie[] pieces, Matrix matrix)
         {
             foreach (var piece in pieces)
                 piece.rotate(matrix);
         }
 
+        //Opposite to the axes means Clockwise is opposite too (so it turns to counter-clockwise and vice versa)
 
+        //Rotate Faces
+        public void R() { RotateSlice(Constants.RIGHT, Constants.ROT_YZ_CW); }
+        public void Ri() { RotateSlice(Constants.RIGHT, Constants.ROT_YZ_CC); }
+        public void L() { RotateSlice(Constants.LEFT, Constants.ROT_YZ_CC); }
+        public void Li() { RotateSlice(Constants.LEFT, Constants.ROT_YZ_CW); }
+        public void U() { RotateSlice(Constants.UP, Constants.ROT_XZ_CW); }
+        public void Ui() { RotateSlice(Constants.UP, Constants.ROT_XZ_CC); }
+        public void D() { RotateSlice(Constants.DOWN, Constants.ROT_XZ_CC); }
+        public void Di() { RotateSlice(Constants.DOWN, Constants.ROT_XZ_CW); }
+        public void F() { RotateSlice(Constants.FRONT, Constants.ROT_XY_CW); }
+        public void Fi() { RotateSlice(Constants.FRONT, Constants.ROT_XY_CC); }
+        public void B() { RotateSlice(Constants.BACK, Constants.ROT_XY_CC); }
+        public void Bi() { RotateSlice(Constants.BACK, Constants.ROT_XY_CW); }
+
+        //Rotate Middle slices
+        public void M() { RotateSlice(Constants.UP+Constants.FRONT, Constants.ROT_YZ_CC); }
+        public void Mi() { RotateSlice(Constants.UP+Constants.FRONT, Constants.ROT_YZ_CW); }
+        public void E() { RotateSlice(Constants.RIGHT+Constants.FRONT, Constants.ROT_YZ_CC); }
+        public void Ei() { RotateSlice(Constants.RIGHT+Constants.FRONT, Constants.ROT_YZ_CW); }
+        public void S() { RotateSlice(Constants.RIGHT+Constants.UP, Constants.ROT_YZ_CW); }
+        public void Si() { RotateSlice(Constants.RIGHT+Constants.UP, Constants.ROT_YZ_CC); }
+
+        //Rotate Whole Cube
+        public void X() { RotateCubies(To1D(), Constants.ROT_YZ_CW); }
+        public void Xi() { RotateCubies(To1D(), Constants.ROT_YZ_CC); }
+        public void Y() { RotateCubies(To1D(), Constants.ROT_XZ_CW); }
+        public void Yi() { RotateCubies(To1D(), Constants.ROT_XZ_CC); }
+        public void Z() { RotateCubies(To1D(), Constants.ROT_XY_CW); }
+        public void Zi() { RotateCubies(To1D(), Constants.ROT_XY_CC); }
     }
 }
