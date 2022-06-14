@@ -16,7 +16,7 @@ namespace RubiksCube
     [Activity(Label = "@string/app_name", Theme = "@style/AppTheme", MainLauncher = true)]
     public class MainActivity : AppCompatActivity, View.IOnClickListener
     {
-        TextView tvHello, tvExplanation;
+        TextView tvHello, tvExplanation, tvTime;
         Button btnPlay, btnNotations, btnSavedStates;
         EditText etUsername, etPass, etConfirmPass;
         Button btnLoginRegister;
@@ -26,9 +26,12 @@ namespace RubiksCube
         bool isLogin;
         bool isLoggedIn;
         ISharedPreferences sp;
+        TimeBroadCast timeBroadCast;
+
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            
             base.OnCreate(savedInstanceState);
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             // Set our view from the "main" layout resource
@@ -37,6 +40,8 @@ namespace RubiksCube
             sp = GetSharedPreferences("details", FileCreationMode.Private);
 
             tvHello = FindViewById<TextView>(Resource.Id.tvHello);
+            tvTime = FindViewById<TextView>(Resource.Id.tvClock);
+
             btnPlay = FindViewById<Button>(Resource.Id.btnPlay);
             btnNotations = FindViewById<Button>(Resource.Id.btnNotations);
             btnSavedStates = FindViewById<Button>(Resource.Id.btnSavedStates);
@@ -44,16 +49,20 @@ namespace RubiksCube
             btnPlay.SetOnClickListener(this);
             btnNotations.SetOnClickListener(this);
             btnSavedStates.SetOnClickListener(this);
+
+            user = new User("", "");
+            timeBroadCast = new TimeBroadCast(tvTime);
         }
 
-
-        public void HandleCube()
+        protected override void OnResume()
         {
-            RubiksCube cube = new RubiksCube();
-
-            string cubeStr = cube.ToPrettyString();
-
-            tvHello.Text = cubeStr;
+            base.OnResume();
+            RegisterReceiver(timeBroadCast, new IntentFilter(Intent.ActionTimeTick));
+        }
+        protected override void OnPause()
+        {
+            UnregisterReceiver(timeBroadCast);
+            base.OnPause();
         }
 
         public void OnClick(View v)
@@ -82,7 +91,7 @@ namespace RubiksCube
                 if (isLogin)
                 {
                     //log in if username exists and if the username matches the password
-                    if (userTemp != null && etPass.Text == userTemp.password)
+                    if (userTemp.username != "" && etPass.Text == userTemp.password)
                     {
                         user = userTemp;
                         str = "Logged in successfully";
@@ -96,7 +105,7 @@ namespace RubiksCube
                 else
                 {
                     //register if username doesn't exist
-                    if (userTemp == null)
+                    if (userTemp.username == "")
                     {
                         //Register if username and password arent empty and password is the same as confirmed password
                         if (etUsername.Text != "" && etPass.Text != "" && etPass.Text == etConfirmPass.Text)

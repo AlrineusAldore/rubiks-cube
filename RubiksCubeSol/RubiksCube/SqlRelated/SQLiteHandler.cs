@@ -70,7 +70,7 @@ namespace RubiksCube
 
         public User GetUser(string username)
         {
-            User user = null;
+            User user = new User("", "");
             //Get user with given username
             string strSql = string.Format("SELECT * FROM users WHERE username='" + username + "'");
             var users = db.Query<User>(strSql);

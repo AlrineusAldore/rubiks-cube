@@ -79,6 +79,7 @@
     <Compile Include="SqlRelated\StateAdapter.cs" />
     <Compile Include="StatesActivity.cs" />
     <Compile Include="SqlRelated\User.cs" />
+    <Compile Include="TimeBroadCast.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\AboutResources.txt" />

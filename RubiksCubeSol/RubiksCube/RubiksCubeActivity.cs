@@ -72,6 +72,8 @@ namespace RubiksCube
             }
         }
 
+        //private 
+
         private void CreateAlertDialog()
         {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
