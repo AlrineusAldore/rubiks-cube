@@ -176,6 +176,7 @@ namespace RubiksCube
             btnLoginRegister = d.FindViewById<Button>(Resource.Id.btnLoginRegister);
             btnLoginRegister.SetOnClickListener(this);
 
+            //change how dialog looks based on whether you want to login or register
             if (isLogin)
             {
                 //enable login, disable register
@@ -196,6 +197,7 @@ namespace RubiksCube
             d.Show(); //show dialog
         }
 
+        //Changes main screen appearance based on whether you're logged in or not
         private void UpdateLoggedInStatus()
         {
             tvHello.Text = "How ya doin' ";
@@ -262,11 +264,13 @@ namespace RubiksCube
             d.Window.SetLayout(1100, 1700);
         }
 
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
     }
 }

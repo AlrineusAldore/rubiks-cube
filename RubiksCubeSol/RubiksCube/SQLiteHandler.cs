@@ -15,7 +15,7 @@ namespace RubiksCube
 {
     class SQLiteHandler
     {
-        private static string DB_NAME = "dbRubiks.db";
+        private static string DB_NAME = "Rubiks.db";
         private string path;
         private SQLiteConnection db;
         public bool isNewDb { get; set; }
