@@ -29,6 +29,8 @@ namespace RubiksCube
         public static Matrix ROT_YZ_CW { get; set; }
         public static Matrix ROT_YZ_CC { get; set; }
 
+        public static string NEW_CUBE_STR { get; set; }
+
 
         static Constants()
         {
@@ -58,6 +60,8 @@ namespace RubiksCube
             ROT_YZ_CC =  new Matrix(new int[] { 1, 0, 0, 
                                                 0, 0,-1, 
                                                 0, 1, 0 });
+
+            NEW_CUBE_STR = "yyyyyyyyyooooooooobbbbbbbbbrrrrrrrrrgggggggggwwwwwwwww";
         }
     }
 }

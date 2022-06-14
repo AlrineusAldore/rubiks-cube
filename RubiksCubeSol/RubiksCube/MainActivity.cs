@@ -9,6 +9,7 @@ using Android.Text;
 using Android.Text.Style;
 using System.Collections.Generic;
 using System;
+using Android.Views.InputMethods;
 
 namespace RubiksCube
 {
@@ -17,7 +18,7 @@ namespace RubiksCube
     {
         TextView tvHello, tvExplanation;
         Button btnPlay, btnNotations, btnSavedStates;
-        EditText etUsername, etEmail, etPass, etConfirmPass;
+        EditText etUsername, etPass, etConfirmPass;
         Button btnLoginRegister;
         Button btnEndNots;
         Dialog d;
@@ -60,6 +61,7 @@ namespace RubiksCube
             if (v == btnPlay)
             {
                 Intent intent = new Intent(this, typeof(RubiksCubeActivity));
+                intent.PutExtra("username", user.username);
                 StartActivity(intent);
             }
             else if (v == btnNotations)
@@ -73,18 +75,20 @@ namespace RubiksCube
             }
             else if (v == btnLoginRegister)
             {
+                DismissKeyboard();
                 string str = "";
-                d.Cancel();
+                User userTemp = SQLiteHandler.Instance.GetUser(etUsername.Text);
 
                 if (isLogin)
                 {
                     //log in if username exists and if the username matches the password
-                    if (true)//users.ContainsKey(etUsername.Text) && users[etUsername.Text] == etPass.Text)
+                    if (userTemp != null && etPass.Text == userTemp.password)
                     {
-                        user = new User(etUsername.Text, etPass.Text);
+                        user = userTemp;
                         str = "Logged in successfully";
                         isLoggedIn = true;
                         UpdateLoggedInStatus();
+                        d.Cancel();
                     }
                     else
                         str = "Username or password are wrong";
@@ -92,13 +96,20 @@ namespace RubiksCube
                 else
                 {
                     //register if username doesn't exist
-                    if (true) //!users.ContainsKey(etUsername.Text))
+                    if (userTemp == null)
                     {
-                        user = new User(etUsername.Text, etPass.Text);
-                        str = "Registered user successfully";
-                        isLoggedIn = true;
-                        UpdateLoggedInStatus();
-                        //users[etUsername.Text] = etPass.Text;
+                        //Register if username and password arent empty and password is the same as confirmed password
+                        if (etUsername.Text != "" && etPass.Text != "" && etPass.Text == etConfirmPass.Text)
+                        {
+                            user = new User(etUsername.Text, etPass.Text);
+                            SQLiteHandler.Instance.InsertUser(etUsername.Text, etPass.Text);
+                            str = "Registered user successfully";
+                            isLoggedIn = true;
+                            UpdateLoggedInStatus();
+                            d.Cancel();
+                        }
+                        else
+                            str = "Details empty or password doesnt match confirmed password";
                     }
                     else
                         str = "User already exists";
@@ -106,7 +117,7 @@ namespace RubiksCube
 
                 //make toast bigger using span
                 SpannableString ss = new SpannableString(str);
-                ss.SetSpan(new RelativeSizeSpan(1.8f), 0, str.Length, 0);
+                ss.SetSpan(new RelativeSizeSpan(1.5f), 0, str.Length, 0);
 
                 Toast.MakeText(this, ss, ToastLength.Long).Show();
             }
@@ -141,14 +152,12 @@ namespace RubiksCube
             if (id == Resource.Id.Login)
             {
                 isLogin = true;
-                isLoggedIn = true;
                 CreateLoginRegisterDialog();
                 return true;
             }
             else if (id == Resource.Id.Register)
             {
                 isLogin = false;
-                isLoggedIn = true;
                 CreateLoginRegisterDialog();
                 return true;
             }
@@ -177,7 +186,6 @@ namespace RubiksCube
 
             //Connect variables to objects
             etUsername = d.FindViewById<EditText>(Resource.Id.etUsername);
-            etEmail = d.FindViewById<EditText>(Resource.Id.etEmail);
             etPass = d.FindViewById<EditText>(Resource.Id.etPass);
             etConfirmPass = d.FindViewById<EditText>(Resource.Id.etConfirmPass);
             btnLoginRegister = d.FindViewById<Button>(Resource.Id.btnLoginRegister);
@@ -187,7 +195,6 @@ namespace RubiksCube
             if (isLogin)
             {
                 //enable login, disable register
-                etEmail.Visibility = ViewStates.Gone;
                 etConfirmPass.Visibility = ViewStates.Gone;
                 d.SetTitle("login");
                 btnLoginRegister.Text = "Log In";
@@ -195,7 +202,6 @@ namespace RubiksCube
             else
             {
                 //enable register, disable login
-                etEmail.Visibility = ViewStates.Visible;
                 etConfirmPass.Visibility = ViewStates.Visible;
                 d.SetTitle("register");
                 btnLoginRegister.Text = "Register";
@@ -269,6 +275,21 @@ namespace RubiksCube
 
             d.Show();
             d.Window.SetLayout(1100, 1700);
+        }
+
+        //Dismisses keyboard
+        public void DismissKeyboard()
+        {
+            //Get a method manager that specializes in input (like keyboard)
+            var inputMethodManager = this.GetSystemService(InputMethodService) as InputMethodManager;
+            if (inputMethodManager != null)
+            {
+                //Get token of currently up input (like activated keyboard)
+                var token = this.CurrentFocus?.WindowToken;
+                inputMethodManager.HideSoftInputFromWindow(token, HideSoftInputFlags.None); //set it to hidden
+
+                this.Window.DecorView.ClearFocus(); //clear the focus and dismiss it
+            }
         }
 
 

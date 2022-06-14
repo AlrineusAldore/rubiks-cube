@@ -13,17 +13,29 @@ using SQLite;
 
 namespace RubiksCube
 {
-    public class SQLiteHandler
+    //Singleton class (global class with 1 instance)
+    public sealed class SQLiteHandler
     {
-        private static string DB_NAME = "Rubiks.db";
+        private static readonly SQLiteHandler instance = new SQLiteHandler();
+
+        private static string DB_NAME;
         private string path;
         private SQLiteConnection db;
-        public bool isNewDb { get; set; }
+        private bool isNewDb;
 
-        public SQLiteHandler()
+        public static SQLiteHandler Instance
+        {
+            get { return instance; }
+        }
+        static SQLiteHandler()
+        { }
+        private SQLiteHandler()
         {
             //Here the database will reside
-            path = Path.Combine(System.Environment.GetFolderPath(System.Environment.SpecialFolder.Personal), DB_NAME);
+            DB_NAME = "Rubiks.db";
+            var folder = System.Environment.SpecialFolder.Personal;
+            var folderPath = System.Environment.GetFolderPath(folder);
+            path = Path.Combine(folderPath, DB_NAME);
             isNewDb = !File.Exists(path); //get if it's a new db or not
 
             db = new SQLiteConnection(path); //Creates the db connection object
@@ -46,10 +58,28 @@ namespace RubiksCube
             User user = new User(username, password);
             db.Insert(user, typeof(User));
         }
+        public void InsertUser(User user)
+        {
+            db.Insert(user, typeof(User));
+        }
 
         public void ChangePassword(User user)
         {
             db.Update(user); //uses primary key to change user's pass (i think)
+        }
+
+        public User GetUser(string username)
+        {
+            User user = null;
+            //Get user with given username
+            string strSql = string.Format("SELECT * FROM users WHERE username='" + username + "'");
+            var users = db.Query<User>(strSql);
+
+            //Only options are 0 or 1 users
+            if (users.Count > 0)
+                user = users[0];
+
+            return user;
         }
 
         public List<State> GetAllStates(string username)
@@ -64,6 +94,10 @@ namespace RubiksCube
         public void InsertState(string cubeStr, string username)
         {
             State state = new State(cubeStr, username);
+            db.Insert(state, typeof(State));
+        }
+        public void InsertState(State state)
+        {
             db.Insert(state, typeof(State));
         }
 

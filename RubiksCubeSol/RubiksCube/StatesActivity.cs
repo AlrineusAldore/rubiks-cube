@@ -17,7 +17,6 @@ namespace RubiksCube
         public static List<State> statesList { get; set; }
         StateAdapter stateAdapter;
         ListView lvStates;
-        SQLiteHandler sqlHandler;
         string username;
 
         Dialog d;
@@ -33,8 +32,7 @@ namespace RubiksCube
             System.Diagnostics.Debug.Assert(username != "", "username empty for saved states activity");
 
             //Get all states from database and create the states adapter with them
-            sqlHandler = new SQLiteHandler();
-            statesList = sqlHandler.GetAllStates(username);
+            statesList = SQLiteHandler.Instance.GetAllStates(username);
             stateAdapter = new StateAdapter(this, statesList);
 
             lvStates = FindViewById<ListView>(Resource.Id.lvStates);
@@ -44,7 +42,17 @@ namespace RubiksCube
 
         public void OnItemClick(AdapterView parent, View view, int position, long id)
         {
-            throw new NotImplementedException();
+            return;
+        }
+
+        //update adapter after changes
+        protected override void OnResume()
+        {
+            base.OnResume();
+            if (stateAdapter != null)
+            {
+                stateAdapter.NotifyDataSetChanged();
+            }
         }
     }
 }

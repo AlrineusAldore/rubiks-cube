@@ -67,6 +67,84 @@ namespace RubiksCube
             }
         }
 
+        public RubiksCube(string cubeStr) : this()
+        {
+            for (int i = 0; i < 9; i++)
+            {
+                //Set all y colors of all top cubies (y=2)
+                // x = 0,1,2,0,1,2,0,1,2
+                // y = 2,2,2,2,2,2,2,2,2
+                // z = 0,0,0,1,1,1,2,2,2
+                cubies[i % 3, 2, i / 3].colors[1] = CharToColor(cubeStr[0]); //set to first char
+                cubeStr = cubeStr.Remove(0, 1); //Remove first char
+                //   y->y->y
+                // ->y->y->y
+                // ->y->y->y
+            }
+            for (int c = 0; c < 4; c++)
+            {
+                //x side z side (axes)
+                int xs = 1, zs = 1;
+                //get const 0 or 2 (-1 or 1, deciding direction)
+                switch (c)
+                {
+                    case 0: //left side
+                        xs = 0;
+                        break;
+                    case 1: //front side
+                        zs = 2;
+                        break;
+                    case 2: //right side
+                        xs = 2;
+                        break;
+                    case 3: //back side
+                        zs = 0;
+                        break;
+                }
+
+                if (c % 2 == 0) //true -> x axis
+                {
+                    for (int i = 0; i < 9; i++)
+                    {
+                        // x = (first loop 0, second loop 2)
+                        // y = 0,0,0,1,1,1,2,2,2
+                        // z = 0,1,2,0,1,2,0,1,2
+                        cubies[xs, i / 3, i % 3].colors[0] = CharToColor(cubeStr[0]); //set to first char
+                        cubeStr = cubeStr.Remove(0, 1); //Remove first char
+                        //   (-+)x->(-+)x->(-+)x
+                        // ->(-+)x->(-+)x->(-+)x
+                        // ->(-+)x->(-+)x->(-+)x
+                    }
+                }
+                else // false -> z axis
+                {
+                    for (int i = 0; i < 9; i++)
+                    {
+                        // x = 0,1,2,0,1,2,0,1,2
+                        // y = 0,0,0,1,1,1,2,2,2
+                        // z = (first loop 2, second loop 0)
+                        cubies[i % 3, i / 3, zs].colors[2] = CharToColor(cubeStr[0]); //set to first char
+                        cubeStr = cubeStr.Remove(0, 1); //Remove first char
+                        //   (+-)z->(+-)z->(+-)z
+                        // ->(+-)z->(+-)z->(+-)z
+                        // ->(+-)z->(+-)z->(+-)z
+                    }
+                }
+            }
+            for (int i = 0; i < 9; i++)
+            {
+                //Get all y colors of all bottom cubies (y=0)
+                // x = 0,1,2,0,1,2,0,1,2
+                // y = 0,0,0,0,0,0,0,0,0
+                // z = 0,0,0,1,1,1,2,2,2
+                cubies[i % 3, 0, i / 3].colors[1] = CharToColor(cubeStr[0]); //set to first char
+                cubeStr = cubeStr.Remove(0, 1); //Remove first char
+                //   (-)y->(-)y->(-)y
+                // ->(-)y->(-)y->(-)y
+                // ->(-)y->(-)y->(-)y
+            }
+        }
+
         public override string ToString()
         {
             string str = "";
@@ -165,7 +243,7 @@ namespace RubiksCube
             string pretty = "";
             string original = ToString();
 
-            /* currently its:
+            /* currently it's:
                 
             yyyyyyyyy
             ooooooooo
@@ -202,6 +280,38 @@ namespace RubiksCube
             }*/
 
             return pretty;
+        }
+
+        private Color CharToColor(char c)
+        {
+            Color col;
+
+            switch(c)
+            {
+                case 'y':
+                    col = Color.yellow;
+                    break;
+                case 'o':
+                    col = Color.orange;
+                    break;
+                case 'b':
+                    col = Color.blue;
+                    break;
+                case 'r':
+                    col = Color.red;
+                    break;
+                case 'g':
+                    col = Color.green;
+                    break;
+                case 'w':
+                    col = Color.white;
+                    break;
+                default:
+                    col = Color.none;
+                    break;
+            }
+
+            return col;
         }
 
         public void RotateSlice(Vector face, Matrix matrix)

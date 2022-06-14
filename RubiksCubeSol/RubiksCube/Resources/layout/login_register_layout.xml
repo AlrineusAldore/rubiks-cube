@@ -18,19 +18,6 @@
         android:textColorHint="@android:color/white"/>
 
     <EditText
-        android:id="@+id/etEmail"
-        android:layout_width="300dp"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text=""
-        android:hint="email"
-        android:textColor="@android:color/white"
-        android:textColorHint="@android:color/white"
-        android:visibility="gone"/>
-
-    <EditText
         android:id="@+id/etPass"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
