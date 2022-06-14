@@ -17,16 +17,13 @@ namespace RubiksCube
         ISharedPreferences sp;
         string username;
         RubiksCube rubiksCube;
-        Dialog d;
-
-        FrameLayout frameLayout;
         Button btnSaveState;
         Button btnEditCube;
         Button btnBackSave;
 
-        Button[] arrows;
-
-        Button[] colors;
+        FrameLayout main;
+        ImageView[,] arrows;
+        Button[,] faces;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -52,6 +49,56 @@ namespace RubiksCube
                 btnSaveState.Visibility = ViewStates.Gone;
             else
                 btnSaveState.Visibility = ViewStates.Visible;
+
+            main = FindViewById<FrameLayout>(Resource.Id.main);
+            CreateCubeBoard();
+            for (int i = 0; i < 4; i++)
+            {
+                for (int j = 0; j < 3; j++)
+                {
+                    arrows[i, j].SetOnClickListener(this);
+                }
+            }
+        }
+
+        private void CreateCubeBoard()
+        {
+            arrows = new ImageView[4, 3];
+            faces = new Button[3, 3];
+
+            arrows[0,0] = FindViewById<ImageView>(Resource.Id.up_left);
+            arrows[0,1] = FindViewById<ImageView>(Resource.Id.up_mid);
+            arrows[0,2] = FindViewById<ImageView>(Resource.Id.up_right);
+            arrows[1,0] = FindViewById<ImageView>(Resource.Id.right_up);
+            arrows[1,1] = FindViewById<ImageView>(Resource.Id.right_mid);
+            arrows[1,2] = FindViewById<ImageView>(Resource.Id.right_down);
+            arrows[2,0] = FindViewById<ImageView>(Resource.Id.down_right);
+            arrows[2,1] = FindViewById<ImageView>(Resource.Id.down_mid);
+            arrows[2,2] = FindViewById<ImageView>(Resource.Id.down_left);
+            arrows[3,0] = FindViewById<ImageView>(Resource.Id.left_down);
+            arrows[3,1] = FindViewById<ImageView>(Resource.Id.left_mid);
+            arrows[3,2] = FindViewById<ImageView>(Resource.Id.left_up);
+
+            faces[0,0] = FindViewById<Button>(Resource.Id.btn1);
+            faces[0,1] = FindViewById<Button>(Resource.Id.btn2);
+            faces[0,2] = FindViewById<Button>(Resource.Id.btn3);
+            faces[1,0] = FindViewById<Button>(Resource.Id.btn4);
+            faces[1,1] = FindViewById<Button>(Resource.Id.btn5);
+            faces[1,2] = FindViewById<Button>(Resource.Id.btn6);
+            faces[2,0] = FindViewById<Button>(Resource.Id.btn7);
+            faces[2,1] = FindViewById<Button>(Resource.Id.btn8);
+            faces[2,2] = FindViewById<Button>(Resource.Id.btn9);
+
+
+            int n = 1;
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    faces[i, j].SetOnClickListener(this);
+                    faces[i, j].SetBackgroundColor(Android.Graphics.Color.Green);
+                }
+            }
         }
 
         public void OnClick(View v)
@@ -72,7 +119,6 @@ namespace RubiksCube
             }
         }
 
-        //private 
 
         private void CreateAlertDialog()
         {
