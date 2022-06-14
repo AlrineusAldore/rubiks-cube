@@ -14,7 +14,7 @@ using SQLiteNetExtensions.Attributes;
 namespace RubiksCube
 {
     [Table("Users")]
-    class User
+    public class User
     {
         [PrimaryKey]
         public string username { get; set; }

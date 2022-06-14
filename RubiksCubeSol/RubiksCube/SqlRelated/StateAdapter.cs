@@ -11,7 +11,7 @@ using System.Text;
 
 namespace RubiksCube
 {
-    class StateAdapter : BaseAdapter<State>
+    public class StateAdapter : BaseAdapter<State>
     {
         public Context context { get; set; }
         public List<State> states { get; set; }

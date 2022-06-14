@@ -13,7 +13,7 @@ using SQLite;
 
 namespace RubiksCube
 {
-    class SQLiteHandler
+    public class SQLiteHandler
     {
         private static string DB_NAME = "Rubiks.db";
         private string path;

@@ -16,12 +16,12 @@ namespace RubiksCube
     public class MainActivity : AppCompatActivity, View.IOnClickListener
     {
         TextView tvHello, tvExplanation;
-        Button btnPlay, btnNotations, btnSaves;
+        Button btnPlay, btnNotations, btnSavedStates;
         EditText etUsername, etEmail, etPass, etConfirmPass;
         Button btnLoginRegister;
         Button btnEndNots;
         Dialog d;
-        Tuple<string, string> user;
+        User user;
         bool isLogin;
         bool isLoggedIn;
         ISharedPreferences sp;
@@ -38,11 +38,11 @@ namespace RubiksCube
             tvHello = FindViewById<TextView>(Resource.Id.tvHello);
             btnPlay = FindViewById<Button>(Resource.Id.btnPlay);
             btnNotations = FindViewById<Button>(Resource.Id.btnNotations);
-            btnSaves = FindViewById<Button>(Resource.Id.btnSaves);
+            btnSavedStates = FindViewById<Button>(Resource.Id.btnSavedStates);
 
             btnPlay.SetOnClickListener(this);
             btnNotations.SetOnClickListener(this);
-            btnSaves.SetOnClickListener(this);
+            btnSavedStates.SetOnClickListener(this);
         }
 
 
@@ -81,7 +81,7 @@ namespace RubiksCube
                     //log in if username exists and if the username matches the password
                     if (true)//users.ContainsKey(etUsername.Text) && users[etUsername.Text] == etPass.Text)
                     {
-                        user = new Tuple<string, string>(etUsername.Text, etPass.Text);
+                        user = new User(etUsername.Text, etPass.Text);
                         str = "Logged in successfully";
                         isLoggedIn = true;
                         UpdateLoggedInStatus();
@@ -94,7 +94,7 @@ namespace RubiksCube
                     //register if username doesn't exist
                     if (true) //!users.ContainsKey(etUsername.Text))
                     {
-                        user = new Tuple<string, string>(etUsername.Text, etPass.Text);
+                        user = new User(etUsername.Text, etPass.Text);
                         str = "Registered user successfully";
                         isLoggedIn = true;
                         UpdateLoggedInStatus();
@@ -109,6 +109,13 @@ namespace RubiksCube
                 ss.SetSpan(new RelativeSizeSpan(1.8f), 0, str.Length, 0);
 
                 Toast.MakeText(this, ss, ToastLength.Long).Show();
+            }
+            else if (v == btnSavedStates)
+            {
+                //Goes to saved states activity with username
+                Intent intent = new Intent(this, typeof(StatesActivity));
+                intent.PutExtra("username", user.username);
+                StartActivity(intent);
             }
         }
 
@@ -204,13 +211,13 @@ namespace RubiksCube
 
             if (!isLoggedIn)
             {
-                btnSaves.Visibility = ViewStates.Invisible;
+                btnSavedStates.Visibility = ViewStates.Invisible;
                 tvHello.Text += "Guesty?";
             }
             else
             {
-                btnSaves.Visibility = ViewStates.Visible;
-                tvHello.Text += user.Item1 + "?";
+                btnSavedStates.Visibility = ViewStates.Visible;
+                tvHello.Text += user.username + "?";
             }
         }
         

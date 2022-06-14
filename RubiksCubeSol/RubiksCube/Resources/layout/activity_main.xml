@@ -41,7 +41,7 @@
         android:text="Notations"/>
 
     <Button
-        android:id="@+id/btnSaves"
+        android:id="@+id/btnSavedStates"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"

@@ -14,7 +14,7 @@ using SQLiteNetExtensions.Attributes;
 namespace RubiksCube
 {
     [Table("States")]
-    class State
+    public class State
     {
         [PrimaryKey, AutoIncrement, Column("_id")]
         public int id { get; set; }

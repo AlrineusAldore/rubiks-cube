@@ -3627,7 +3627,7 @@ namespace RubiksCube
 			public const int btnPlay = 2131230801;
 			
 			// aapt resource value: 0x7F080053
-			public const int btnSaves = 2131230803;
+			public const int btnSavedStates = 2131230803;
 			
 			// aapt resource value: 0x7F080052
 			public const int btnSaveState = 2131230802;
