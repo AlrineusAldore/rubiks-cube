@@ -4,6 +4,7 @@ using Android.OS;
 using Android.Runtime;
 using Android.Views;
 using Android.Widget;
+using RubiksCube.Math;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,15 +12,14 @@ using System.Text;
 
 namespace RubiksCube
 {
-    class Square
+    class Corner : Cubie
     {
-        public Color color { get; private set; }
-        public char c { get; private set; } //First char of color
-
-        public Square(Color color)
+        public Corner(Vector xyz, Color[] cxyz) : base(xyz, cxyz)
         {
-            this.color = color;
-            c = color.ToString()[0];
+        }
+
+        public Corner(int x, int y, int z, Color cx, Color cy, Color cz) : base(x, y, z, cx, cy, cz)
+        {
         }
     }
 }

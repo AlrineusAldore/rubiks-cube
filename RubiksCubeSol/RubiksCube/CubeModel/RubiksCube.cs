@@ -60,8 +60,20 @@ namespace RubiksCube
                                 break;
                         }
 
-                        //-1 to convert from 0->2 to -1->1
-                        cubies[x, y, z] = new Cubie(x-1, y-1, z-1, cx, cy, cz);
+                        int[] arr = new int[3] { x, y, z};
+                        switch(arr.Count(s => s == 1)) //counts the number of ones
+                        {
+                            //-1 to convert from 0->2 to -1->1
+                            case 0:
+                                cubies[x, y, z] = new Corner(x - 1, y - 1, z - 1, cx, cy, cz);
+                                break;
+                            case 1:
+                                cubies[x, y, z] = new Edge(x - 1, y - 1, z - 1, cx, cy, cz);
+                                break;
+                            case 2:
+                                cubies[x, y, z] = new Face(x - 1, y - 1, z - 1, cx, cy, cz);
+                                break;
+                        }
                     }
                 }
             }
@@ -314,9 +326,19 @@ namespace RubiksCube
             return col;
         }
 
+
         public void RotateSlice(Vector face, Matrix matrix)
         {
 
         }
+
+        //Get the set of Cubies that need to rotate and rotate them
+        private void RotateCubies(Cubie[] pieces, Matrix matrix)
+        {
+            foreach (var piece in pieces)
+                piece.rotate(matrix);
+        }
+
+
     }
 }

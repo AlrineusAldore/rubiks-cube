@@ -47,6 +47,19 @@ namespace RubiksCube
             return false;
         }
 
+        public bool IsFace()
+        {
+            return this is Face;
+        }
+        public bool IsEdge()
+        {
+            return this is Edge;
+        }
+        public bool IsCorner()
+        {
+            return this is Corner;
+        }
+
         public void rotate(Matrix matrix)
         {
             Vector prev = position.GetCopy();

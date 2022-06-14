@@ -29,6 +29,14 @@ namespace RubiksCube
         public static Matrix ROT_YZ_CW { get; set; }
         public static Matrix ROT_YZ_CC { get; set; }
 
+        //Vectors representing sides
+        public static Vector RIGHT { get; set; }
+        public static Vector LEFT { get; set; }
+        public static Vector UP { get; set; }
+        public static Vector DOWN { get; set; }
+        public static Vector FRONT { get; set; }
+        public static Vector BACK { get; set; }
+
         public static string NEW_CUBE_STR { get; set; }
 
 
@@ -60,6 +68,13 @@ namespace RubiksCube
             ROT_YZ_CC =  new Matrix(new int[] { 1, 0, 0, 
                                                 0, 0,-1, 
                                                 0, 1, 0 });
+
+            RIGHT = new Vector(1, 0, 0);
+            LEFT =  new Vector(-1, 0, 0);
+            UP =    new Vector(0, 1, 0);
+            DOWN =  new Vector(0,-1, 0);
+            FRONT = new Vector(0, 0, 1);
+            BACK =  new Vector(0, 0,-1);
 
             NEW_CUBE_STR = "yyyyyyyyyooooooooobbbbbbbbbrrrrrrrrrgggggggggwwwwwwwww";
         }

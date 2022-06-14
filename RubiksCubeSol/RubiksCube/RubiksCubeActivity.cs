@@ -23,7 +23,7 @@ namespace RubiksCube
 
         FrameLayout main;
         ImageView[,] arrows;
-        Button[,] faces;
+        ImageView[,] faces;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -64,7 +64,7 @@ namespace RubiksCube
         private void CreateCubeBoard()
         {
             arrows = new ImageView[4, 3];
-            faces = new Button[3, 3];
+            faces = new ImageView[3, 3];
 
             arrows[0,0] = FindViewById<ImageView>(Resource.Id.up_left);
             arrows[0,1] = FindViewById<ImageView>(Resource.Id.up_mid);
@@ -79,15 +79,15 @@ namespace RubiksCube
             arrows[3,1] = FindViewById<ImageView>(Resource.Id.left_mid);
             arrows[3,2] = FindViewById<ImageView>(Resource.Id.left_up);
 
-            faces[0,0] = FindViewById<Button>(Resource.Id.btn1);
-            faces[0,1] = FindViewById<Button>(Resource.Id.btn2);
-            faces[0,2] = FindViewById<Button>(Resource.Id.btn3);
-            faces[1,0] = FindViewById<Button>(Resource.Id.btn4);
-            faces[1,1] = FindViewById<Button>(Resource.Id.btn5);
-            faces[1,2] = FindViewById<Button>(Resource.Id.btn6);
-            faces[2,0] = FindViewById<Button>(Resource.Id.btn7);
-            faces[2,1] = FindViewById<Button>(Resource.Id.btn8);
-            faces[2,2] = FindViewById<Button>(Resource.Id.btn9);
+            faces[0,0] = FindViewById<ImageView>(Resource.Id.face1);
+            faces[0,1] = FindViewById<ImageView>(Resource.Id.face2);
+            faces[0,2] = FindViewById<ImageView>(Resource.Id.face3);
+            faces[1,0] = FindViewById<ImageView>(Resource.Id.face4);
+            faces[1,1] = FindViewById<ImageView>(Resource.Id.face5);
+            faces[1,2] = FindViewById<ImageView>(Resource.Id.face6);
+            faces[2,0] = FindViewById<ImageView>(Resource.Id.face7);
+            faces[2,1] = FindViewById<ImageView>(Resource.Id.face8);
+            faces[2,2] = FindViewById<ImageView>(Resource.Id.face9);
 
 
             int n = 1;
@@ -117,8 +117,23 @@ namespace RubiksCube
             {
                 CreateAlertDialog();
             }
+            else
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    for (int j = 0; j < 3; j++)
+                    {
+                        if (v == arrows[i, j])
+                            RotateBy(i, j);
+                    }
+                }
+            }
         }
 
+        private void RotateBy(int i, int j)
+        {
+
+        }
 
         private void CreateAlertDialog()
         {
