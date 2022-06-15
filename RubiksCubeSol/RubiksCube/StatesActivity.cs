@@ -45,7 +45,9 @@ namespace RubiksCube
         {
             //On item click, get cube str of state and initialize rubiks cube with it
             Intent intent = new Intent(this, typeof(RubiksCubeActivity));
+            intent.SetFlags(ActivityFlags.NoHistory);
             intent.PutExtra("cubeStr", statesList[position].cubeStr);
+            intent.PutExtra("username", username);
             StartActivity(intent);
         }
 

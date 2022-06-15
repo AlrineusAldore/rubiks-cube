@@ -36,15 +36,16 @@ namespace RubiksCube
 
             //Continue cube from where you last left off by using sp
             sp = GetSharedPreferences("details", FileCreationMode.Private);
-            string cubeStr = sp.GetString("cubeStr", Constants.NEW_CUBE_STR);
+            string cubeStr = sp.GetString("cubeSt", Constants.NEW_CUBE_STR);
             rubiksCube = new RubiksCube(cubeStr);
+            string check = rubiksCube.ToString(); //oyyyyybyywnwnooynoonbnbbybbrrrrrrrrrgnggnggggowwonwbnw
 
             btnSaveState = FindViewById<Button>(Resource.Id.btnSaveState);
             btnBackSave = FindViewById<Button>(Resource.Id.btnBackSave);
             btnSaveState.SetOnClickListener(this);
             btnBackSave.SetOnClickListener(this);
 
-            //Let user save state if he's logged in
+            //Let user save state if he's logged in 
             if (username == "")
                 btnSaveState.Visibility = ViewStates.Gone;
             else
@@ -56,6 +57,8 @@ namespace RubiksCube
             {
                 arrows[i].SetOnClickListener(this);
             }
+
+            Update();
         }
 
         private void CreateCubeBoard()
@@ -198,6 +201,9 @@ namespace RubiksCube
                     break;
                 case Color.white:
                     graphicsColor = Android.Graphics.Color.White;
+                    break;
+                default:
+                    graphicsColor = Android.Graphics.Color.Gray;
                     break;
             }
 

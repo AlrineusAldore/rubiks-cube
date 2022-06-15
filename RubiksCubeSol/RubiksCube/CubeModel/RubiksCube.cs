@@ -72,28 +72,13 @@ namespace RubiksCube
                             case 2:
                                 cubies[x, y, z] = new Center(x - 1, y - 1, z - 1, cx, cy, cz);
                                 break;
+                            default:
+                                cubies[x, y, z] = new Cubie(x - 1, y - 1, z - 1, cx, cy, cz);
+                                break;
                         }
                     }
                 }
             }
-        }
-
-        public string GetFront()
-        {
-            string front = "";
-            for (int i = 0; i < 9; i++)
-            {
-                //Get all f colors of all front cubies (z=2)
-                // x = 0,1,2,0,1,2,0,1,2
-                // y = 2,2,2,1,1,1,0,0,0
-                // z = 2,2,2,2,2,2,2,2,2
-                front += cubies[i % 3, 2 - (i/3), 2].colors[2].ToString()[0];
-                //   f->f->f
-                // ->f->f->f
-                // ->f->f->f
-            }
-
-            return front;
         }
 
         public RubiksCube(string cubeStr) : this()
@@ -173,6 +158,8 @@ namespace RubiksCube
                 // ->(-)y->(-)y->(-)y
             }
         }
+
+
 
         public override string ToString()
         {
@@ -254,8 +241,25 @@ namespace RubiksCube
             return str;
         }
 
-        //maybe not needed since im not using console (?)
-        
+        public string GetFront()
+        {
+            string front = "";
+            for (int i = 0; i < 9; i++)
+            {
+                //Get all f colors of all front cubies (z=2)
+                // x = 0,1,2,0,1,2,0,1,2
+                // y = 2,2,2,1,1,1,0,0,0
+                // z = 2,2,2,2,2,2,2,2,2
+                front += cubies[i % 3, 2 - (i / 3), 2].colors[2].ToString()[0];
+                //   f->f->f
+                // ->f->f->f
+                // ->f->f->f
+            }
+
+            return front;
+        }
+
+
         public string ToPrettyString()
         {
             /* TODO end result:
@@ -355,6 +359,20 @@ namespace RubiksCube
             return pieces.ToArray();
         }
 
+        //After rotation via matrices, Cubies have correct position vectors but their index is incorrect so we make their new index the pos vector
+        private void RearrangeCubies()
+        {
+            Cubie[,,] arranged = new Cubie[3, 3, 3];
+
+            //Change cubies' index to pos vector
+            foreach(Cubie c in cubies)
+            {
+                arranged[c.position.x + 1, c.position.y + 1, c.position.z + 1] = c;
+            }
+
+            cubies = arranged;
+        }
+
         public Cubie[] GetFace(Vector face)
         {
             System.Diagnostics.Debug.Assert(face.Count(0) == 2); //make sure the vector represents a face
@@ -415,6 +433,8 @@ namespace RubiksCube
         {
             foreach (var piece in pieces)
                 piece.rotate(matrix);
+
+            RearrangeCubies();
         }
 
         //Opposite to the axes means Clockwise is opposite too (so it turns to counter-clockwise and vice versa)
