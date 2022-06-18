@@ -36,9 +36,13 @@ namespace RubiksCube
 
             //Continue cube from where you last left off by using sp
             sp = GetSharedPreferences("details", FileCreationMode.Private);
-            string cubeStr = sp.GetString("cubeSt", Constants.NEW_CUBE_STR);
+            string cubeStr = sp.GetString("cubeStr", Constants.NEW_CUBE_STR);
+            //If we get a string from intent, it's from saved states
+            string intentCube = Intent.GetStringExtra("cubeStr");
+            if (intentCube != null)
+                cubeStr = intentCube;
+
             rubiksCube = new RubiksCube(cubeStr);
-            string check = rubiksCube.ToString(); //oyyyyybyywnwnooynoonbnbbybbrrrrrrrrrgnggnggggowwonwbnw
 
             btnSaveState = FindViewById<Button>(Resource.Id.btnSaveState);
             btnBackSave = FindViewById<Button>(Resource.Id.btnBackSave);
@@ -58,7 +62,7 @@ namespace RubiksCube
                 arrows[i].SetOnClickListener(this);
             }
 
-            Update();
+            UpdateColors();
         }
 
         private void CreateCubeBoard()
@@ -164,10 +168,10 @@ namespace RubiksCube
                     rubiksCube.U();
                     break;
             }
-            Update();
+            UpdateColors();
         }
 
-        private void Update()
+        private void UpdateColors()
         {
             string front = rubiksCube.GetFront();
             for (int i = 0; i < 9; i++)

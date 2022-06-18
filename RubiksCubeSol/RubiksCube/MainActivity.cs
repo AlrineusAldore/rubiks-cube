@@ -84,7 +84,7 @@ namespace RubiksCube
             }
             else if (v == btnLoginRegister)
             {
-                DismissKeyboard();
+                //DismissKeyboard();
                 string str = "";
                 User userTemp = SQLiteHandler.Instance.GetUser(etUsername.Text);
 
@@ -129,6 +129,8 @@ namespace RubiksCube
                 ss.SetSpan(new RelativeSizeSpan(1.5f), 0, str.Length, 0);
 
                 Toast.MakeText(this, ss, ToastLength.Long).Show();
+
+                DismissKeyboard();
             }
             else if (v == btnSavedStates)
             {
@@ -289,15 +291,19 @@ namespace RubiksCube
         //Dismisses keyboard
         public void DismissKeyboard()
         {
-            //Get a method manager that specializes in input (like keyboard)
-            var inputMethodManager = this.GetSystemService(InputMethodService) as InputMethodManager;
+            var context = Application.Context;
+            //context = d.Context.ApplicationContext;
+            //context = this; //get context
+            //Get a method manager that specializes in input (like keyboard) from this context
+            var inputMethodManager = context.GetSystemService(Context.InputMethodService) as InputMethodManager;
             if (inputMethodManager != null)
             {
-                //Get token of currently up input (like activated keyboard)
-                var token = this.CurrentFocus?.WindowToken;
+                var activity = context as Activity;
+                //Get token of currently up input (like activated keyboard) from this activity
+                var token = activity?.CurrentFocus?.WindowToken;
                 inputMethodManager.HideSoftInputFromWindow(token, HideSoftInputFlags.None); //set it to hidden
 
-                this.Window.DecorView.ClearFocus(); //clear the focus and dismiss it
+                activity?.Window.DecorView.ClearFocus(); //clear the focus and dismiss it
             }
         }
 
