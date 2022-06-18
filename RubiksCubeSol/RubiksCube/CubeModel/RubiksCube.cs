@@ -456,10 +456,10 @@ namespace RubiksCube
         //Rotate Middle slices
         public void M() { RotateSlice(Constants.UP+Constants.FRONT, Constants.ROT_YZ_CC); }
         public void Mi() { RotateSlice(Constants.UP+Constants.FRONT, Constants.ROT_YZ_CW); }
-        public void E() { RotateSlice(Constants.RIGHT+Constants.FRONT, Constants.ROT_YZ_CC); }
-        public void Ei() { RotateSlice(Constants.RIGHT+Constants.FRONT, Constants.ROT_YZ_CW); }
-        public void S() { RotateSlice(Constants.RIGHT+Constants.UP, Constants.ROT_YZ_CW); }
-        public void Si() { RotateSlice(Constants.RIGHT+Constants.UP, Constants.ROT_YZ_CC); }
+        public void E() { RotateSlice(Constants.RIGHT+Constants.FRONT, Constants.ROT_XZ_CC); }
+        public void Ei() { RotateSlice(Constants.RIGHT+Constants.FRONT, Constants.ROT_XZ_CW); }
+        public void S() { RotateSlice(Constants.RIGHT+Constants.UP, Constants.ROT_XY_CW); }
+        public void Si() { RotateSlice(Constants.RIGHT+Constants.UP, Constants.ROT_XY_CC); }
 
         //Rotate Whole Cube
         public void X() { RotateCubies(To1D(), Constants.ROT_YZ_CW); }
