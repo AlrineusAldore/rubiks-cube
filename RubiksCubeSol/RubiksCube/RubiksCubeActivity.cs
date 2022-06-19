@@ -333,7 +333,8 @@ namespace RubiksCube
         private void UpdateColors()
         {
             string cubeStr = rubiksCube.ToString();
-            string front = rubiksCube.GetFront();
+            //string[] lines = cubeStr.Split( new string[] { System.Environment.NewLine }, StringSplitOptions.None );
+            string front = rubiksCube.GetFront(true);
             for (int i = 0; i < 9; i++)
             {
                 //Char to cube color to xamarin color to set the background

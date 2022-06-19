@@ -10,6 +10,7 @@ using Android.Text.Style;
 using System.Collections.Generic;
 using System;
 using Android.Views.InputMethods;
+using Android.Media;
 
 namespace RubiksCube
 {
@@ -179,8 +180,10 @@ namespace RubiksCube
             }
             else if (id == Resource.Id.Notations)
             {
-                //Intent intent = new Intent(this, typeof(RulesActivity));
-                //StartActivityForResult(intent, 0);
+                MediaPlayer mp;
+                mp = MediaPlayer.Create(this, Resource.Raw.rickroll); //creates player
+                mp.Start(); // starts player
+                CreateNotationsDialog();
                 return true;
             }
 

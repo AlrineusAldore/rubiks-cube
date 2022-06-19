@@ -241,8 +241,11 @@ namespace RubiksCube
             return str;
         }
 
-        public string GetFront()
+        public string GetFront(bool isFront)
         {
+            int z = 0;
+            if (isFront)
+                z = 2;
             string front = "";
             for (int i = 0; i < 9; i++)
             {
@@ -250,13 +253,45 @@ namespace RubiksCube
                 // x = 0,1,2,0,1,2,0,1,2
                 // y = 2,2,2,1,1,1,0,0,0
                 // z = 2,2,2,2,2,2,2,2,2
-                front += cubies[i % 3, 2 - (i / 3), 2].colors[2].ToString()[0];
+                front += cubies[i % 3, 2 - (i / 3), z].colors[2].ToString()[0];
                 //   f->f->f
                 // ->f->f->f
                 // ->f->f->f
             }
 
             return front;
+        }
+        public string GetRight(bool isRight)
+        {
+            int x = 0;
+            if (isRight)
+                x = 2;
+            string str = "";
+            for (int i = 0; i < 9; i++)
+            {
+                str += cubies[x, i / 3, i % 3].colors[0].ToString()[0];
+                //   (-+)x->(-+)x->(-+)x
+                // ->(-+)x->(-+)x->(-+)x
+                // ->(-+)x->(-+)x->(-+)x
+            }
+
+            return str;
+        }
+        public string GetUp(bool isUp)
+        {
+            int y = 0;
+            if (isUp)
+                y = 2;
+            string str = "";
+            for (int i = 0; i < 9; i++)
+            {
+                str += cubies[i % 3, y, i / 3].colors[1].ToString()[0];
+                //   (-)y->(-)y->(-)y
+                // ->(-)y->(-)y->(-)y
+                // ->(-)y->(-)y->(-)y
+            }
+
+            return str;
         }
 
 
