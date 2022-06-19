@@ -355,6 +355,7 @@ namespace RubiksCube
             //n is from 0 to 8 representing all front faces' indexes
             rubiksCube.cubies[n % 3, n / 3, 2].colors[2] = selectedColor; //front faces from left to right then top to bottom
             frontFaces[n].SetBackgroundColor(CubeColor2XmlColor(selectedColor));
+            faces[2, n].SetBackgroundColor(CubeColor2XmlColor(selectedColor));
         }
 
         private Android.Graphics.Color CubeColor2XmlColor(Color color)
