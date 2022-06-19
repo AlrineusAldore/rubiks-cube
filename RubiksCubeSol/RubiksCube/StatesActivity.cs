@@ -41,6 +41,14 @@ namespace RubiksCube
             lvStates.OnItemLongClickListener = this;
         }
 
+        protected override void OnActivityResult(int requestCode, [GeneratedEnum] Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            //Goes back to main screen when returning from chosen state
+            if (requestCode == 420)
+                Finish();
+        }
+
         public void OnItemClick(AdapterView parent, View view, int position, long id)
         {
             //On item click, get cube str of state and initialize rubiks cube with it
@@ -48,7 +56,7 @@ namespace RubiksCube
             intent.SetFlags(ActivityFlags.NoHistory);
             intent.PutExtra("cubeStr", statesList[position].cubeStr);
             intent.PutExtra("username", username);
-            StartActivity(intent);
+            StartActivityForResult(intent, 420);
         }
 
         public bool OnItemLongClick(AdapterView parent, View view, int position, long id)
@@ -94,5 +102,7 @@ namespace RubiksCube
                 stateAdapter.NotifyDataSetChanged();
             }
         }
+
+
     }
 }
