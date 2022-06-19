@@ -37,6 +37,7 @@ namespace RubiksCube
         public static Vector BACK { get; set; }
 
         public static string NEW_CUBE_STR { get; set; }
+        public static string EMPTY_CUBE_STR { get; set; }
 
 
         static Constants()
@@ -76,6 +77,7 @@ namespace RubiksCube
             BACK =  new Vector(0, 0,-1);
 
             NEW_CUBE_STR = "yyyyyyyyyooooooooobbbbbbbbbrrrrrrrrrgggggggggwwwwwwwww";
+            EMPTY_CUBE_STR = "nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn";
         }
     }
 }

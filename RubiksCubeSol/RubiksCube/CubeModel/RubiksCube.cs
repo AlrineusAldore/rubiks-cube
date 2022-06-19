@@ -16,7 +16,7 @@ namespace RubiksCube
         //right +x red, left -x orange
         //up +y yellow, down -y white
         //front +z blue, back -z green
-        Cubie[,,] cubies { get; set; }
+        public Cubie[,,] cubies { get; set; }
 
         public RubiksCube()
         {

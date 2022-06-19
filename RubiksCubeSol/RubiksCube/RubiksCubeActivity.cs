@@ -20,10 +20,13 @@ namespace RubiksCube
         Button btnSaveState;
         Button btnEditCube;
         Button btnBackSave;
+        bool isEditOn;
+        Color selectedColor;
 
         FrameLayout main;
         ImageView[] arrows;
         ImageView[] faces;
+        ImageButton[] colorBtns;
 
         protected override void OnCreate(Bundle savedInstanceState)
         {
@@ -43,11 +46,15 @@ namespace RubiksCube
                 cubeStr = intentCube;
 
             rubiksCube = new RubiksCube(cubeStr);
+            isEditOn = false;
+            selectedColor = Color.white; //default value
 
             btnSaveState = FindViewById<Button>(Resource.Id.btnSaveState);
             btnBackSave = FindViewById<Button>(Resource.Id.btnBackSave);
+            btnEditCube = FindViewById<Button>(Resource.Id.btnEdit);
             btnSaveState.SetOnClickListener(this);
             btnBackSave.SetOnClickListener(this);
+            btnEditCube.SetOnClickListener(this);
 
             //Let user save state if he's logged in 
             if (username == "")
@@ -56,19 +63,16 @@ namespace RubiksCube
                 btnSaveState.Visibility = ViewStates.Visible;
 
             main = FindViewById<FrameLayout>(Resource.Id.main);
-            CreateCubeBoard();
-            for (int i = 0; i < 12; i++)
-            {
-                arrows[i].SetOnClickListener(this);
-            }
+            InitButtons();
 
             UpdateColors();
         }
 
-        private void CreateCubeBoard()
+        private void InitButtons()
         {
             arrows = new ImageView[12];
             faces = new ImageView[9];
+            colorBtns = new ImageButton[6];
 
             arrows[0] = FindViewById<ImageView>(Resource.Id.up_left);
             arrows[1] = FindViewById<ImageView>(Resource.Id.up_mid);
@@ -93,9 +97,21 @@ namespace RubiksCube
             faces[7] = FindViewById<ImageView>(Resource.Id.face8);
             faces[8] = FindViewById<ImageView>(Resource.Id.face9);
 
+            colorBtns[0] = FindViewById<ImageButton>(Resource.Id.btnYellow);
+            colorBtns[1] = FindViewById<ImageButton>(Resource.Id.btnOrange);
+            colorBtns[2] = FindViewById<ImageButton>(Resource.Id.btnBlue);
+            colorBtns[3] = FindViewById<ImageButton>(Resource.Id.btnRed);
+            colorBtns[4] = FindViewById<ImageButton>(Resource.Id.btnGreen);
+            colorBtns[5] = FindViewById<ImageButton>(Resource.Id.btnWhite);
+
+            for (int i = 0; i < 12; i++)
+                arrows[i].SetOnClickListener(this);
 
             for (int i = 0; i < 9; i++)
                 faces[i].SetOnClickListener(this);
+
+            for (int i = 0; i < 6; i++)
+                colorBtns[i].SetOnClickListener(this);
         }
 
         public void OnClick(View v)
@@ -114,6 +130,20 @@ namespace RubiksCube
             {
                 CreateAlertDialog();
             }
+            else if (v == btnEditCube)
+            {
+                isEditOn = !isEditOn;
+
+                //Make color buttons visible/invisible depends if edit is on
+                ViewStates vState;
+                if (isEditOn)
+                    vState = ViewStates.Visible;
+                else
+                    vState = ViewStates.Gone;
+
+                for (int i = 0; i < 6; i++)
+                    colorBtns[i].Visibility = vState;
+            }
             else
             {
                 for (int i = 0; i < 12; i++)
@@ -124,7 +154,41 @@ namespace RubiksCube
                         break;
                     }
                 }
+
+                //only edit stuff if edit is on
+                if (isEditOn)
+                {
+                    //If it wasn't color buttons, check for faces
+                    if (!CheckColorButtons(v))
+                    {
+                        for (int i = 0; i < 9; i++)
+                        {
+                            if (v == faces[i])
+                                UpdateFace(i);
+                        }
+                    }
+                }
             }
+        }
+
+        private bool CheckColorButtons(View v)
+        {
+            if (v == colorBtns[0])
+                selectedColor = Color.yellow;
+            else if (v == colorBtns[1])
+                selectedColor = Color.orange;
+            else if (v == colorBtns[2])
+                selectedColor = Color.blue;
+            else if (v == colorBtns[3])
+                selectedColor = Color.red;
+            else if (v == colorBtns[4])
+                selectedColor = Color.green;
+            else if (v == colorBtns[5])
+                selectedColor = Color.white;
+            else
+                return false;
+
+            return true; //meaning it was one of those buttons
         }
 
         private void Rotate(int x)
@@ -180,6 +244,13 @@ namespace RubiksCube
                 faces[i].SetBackgroundColor(CubeColor2XmlColor(rubiksCube.CharToColor(front[i])));
             }
 
+        }
+
+        private void UpdateFace(int n)
+        {
+            //n is from 0 to 8 representing all front faces' indexes
+            rubiksCube.cubies[n % 3, n / 3, 2].colors[2] = selectedColor; //front faces from left to right then top to bottom
+            faces[n].SetBackgroundColor(CubeColor2XmlColor(selectedColor));
         }
 
         private Android.Graphics.Color CubeColor2XmlColor(Color color)
