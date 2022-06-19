@@ -8,21 +8,6 @@
     android:background="@android:color/black">
 
 
-    <ImageView
-        android:layout_width="300dp"
-        android:layout_height="225dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="130dp"
-        android:background="@drawable/rubiks_all_colors"/>
-        
-    <!--ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="130dp"
-        android:layout_marginRight="37dp"
-        android:background="@drawable/rubiks_red"/-->
-
     <TableLayout
         android:id="@+id/table"
         android:layout_width="100dp"
@@ -298,7 +283,7 @@
 
     <Button
         android:id="@+id/btnEdit"
-        android:layout_width="120dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="18sp"
         android:textColor="@android:color/white"
@@ -320,6 +305,19 @@
         android:gravity="center"
         android:layout_marginBottom="250dp"
         android:layout_marginLeft="120dp"
+        android:backgroundTint="@android:color/holo_blue_dark"/>
+
+    <Button
+        android:id="@+id/btnReset"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="18sp"
+        android:textColor="@android:color/white"
+        android:text="Reset"
+        android:layout_gravity="left"
+        android:gravity="center"
+        android:layout_marginTop="1dp"
+        android:layout_marginLeft="5dp"
         android:backgroundTint="@android:color/holo_blue_dark"/>
 
 

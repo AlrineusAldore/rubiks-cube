@@ -14,10 +14,10 @@ namespace RubiksCube
     public enum Color
     {
         yellow,
+        orange,
         blue,
         red,
         green,
-        orange,
         white,
         empty,
         none
