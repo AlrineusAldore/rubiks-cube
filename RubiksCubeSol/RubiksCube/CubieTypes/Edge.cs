@@ -11,15 +11,14 @@ using System.Text;
 
 namespace RubiksCube
 {
-    class Square
+    class Edge : Cubie
     {
-        public Color color { get; private set; }
-        public char c { get; private set; } //First char of color
-
-        public Square(Color color)
+        public Edge(Vector xyz, Color[] cxyz) : base(xyz, cxyz)
         {
-            this.color = color;
-            c = color.ToString()[0];
+        }
+
+        public Edge(int x, int y, int z, Color cx, Color cy, Color cz) : base(x, y, z, cx, cy, cz)
+        {
         }
     }
 }

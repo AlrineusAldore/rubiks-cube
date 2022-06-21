@@ -11,15 +11,14 @@ using System.Text;
 
 namespace RubiksCube
 {
-    public enum Color
+    class Corner : Cubie
     {
-        yellow,
-        orange,
-        blue,
-        red,
-        green,
-        white,
-        empty,
-        none
+        public Corner(Vector xyz, Color[] cxyz) : base(xyz, cxyz)
+        {
+        }
+
+        public Corner(int x, int y, int z, Color cx, Color cy, Color cz) : base(x, y, z, cx, cy, cz)
+        {
+        }
     }
 }

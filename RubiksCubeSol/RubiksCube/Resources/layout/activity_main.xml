@@ -5,14 +5,58 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@android:color/holo_orange_dark">
+    android:background="@android:color/black">
+
+    <ImageView
+        android:id="@+id/imgView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/rubiks_cube"/>
 
     <TextView
-        android:id="@+id/tv"
+        android:id="@+id/tvHello"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
         android:layout_gravity="center"
         android:textColor="@android:color/white"
-        android:text="hi"/>
+        android:text="How ya doin' Guesty?"
+        android:layout_marginBottom="30dp"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:id="@+id/btnPlay"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:text="Play Rubik's Cube"
+        android:layout_gravity="center"
+        android:textSize="20sp"/>
+
+    <Button
+        android:id="@+id/btnNotations"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:text="Notations"/>
+
+    <Button
+        android:id="@+id/btnSavedStates"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:textSize="20sp"
+        android:text="Saved States"
+        android:visibility="invisible"/>
+
+    <TextView
+        android:id="@+id/tvClock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="30sp"
+        android:text="clock"
+        android:layout_gravity="center"/>
+
 </LinearLayout>
